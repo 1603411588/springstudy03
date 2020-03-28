@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("simpleThreadScope")
 public class ScopeBean1 {
+
 }
