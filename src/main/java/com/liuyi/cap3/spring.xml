@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.liuyi.cap3"/>
+
+    <bean id="parent" class="com.liuyi.cap3.Parent" abstract="true">
+        <property name="username" value="parent name"></property>
+        <property name="age" value="35"></property>
+    </bean>
+
+    <bean id="son" class="com.liuyi.cap3.Child" parent="parent">
+        <property name="age" value="9"></property>
+    </bean>
+
+    <bean id="lazyInitBean" class="com.liuyi.cap3.LazyInitBean" lazy-init="true"></bean>
+
+    <bean class="com.liuyi.cap3.AutowireCandidateBean" autowire-candidate="false"/>
+
+    <bean class="com.liuyi.cap3.DemoController"></bean>
+
+    <bean class="com.liuyi.cap3.InitDestroyBean" init-method="init" destroy-method="destroy"></bean>
+
+    <!-- factory-bean -->
+    <bean class="com.liuyi.cap3.FactoryBean" id="factoryBean"></bean>
+    <bean factory-bean="factoryBean" factory-method="create" id="factoryCreateBean"></bean>
+
+    <!-- lookup-method -->
+    <bean id="woman" class="com.liuyi.cap3.LookupMethodBean$Woman"></bean>
+    <bean class="com.liuyi.cap3.LookupMethodBean">
+        <lookup-method name="getPeople" bean="woman"></lookup-method>
+    </bean>
+
+    <!-- replaced-method -->
+    <bean id="targetReplaceBean" class="com.liuyi.cap3.ReplaceMethodBean.TargetReplaceBean"></bean>
+    <bean class="com.liuyi.cap3.ReplaceMethodBean">
+        <replaced-method name="method" replacer="targetReplaceBean">
+            <arg-type match="java.lang.String"></arg-type>
+        </replaced-method>
+    </bean>
+
+    <!-- 装饰 -->
+    <bean class="com.liuyi.cap3.DecorateBean" c:name="liuyi" c:age="10" p:password="123242" p:sex="M"></bean>
+</beans>
